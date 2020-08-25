@@ -150,10 +150,11 @@ def logSave(nameOfModel, clf, metrics, val_metrics):
 			name_of_file = "_".join([Var.modelNum, nameOfModel])
 			h2o.save_model(clf[0].leader, path=os.path.join("H2OModels", name_of_file + "1"))
 			h2o.save_model(clf[1].leader, path=os.path.join("H2OModels", name_of_file + "2"))
-		pickle_out = open(os.path.join("SKLearnModels", name_of_file + "1"), "wb")
-		pickle.dump(clf[0], pickle_out)
-		pickle_out = open(os.path.join("SKLearnModels", name_of_file + "2"), "wb")
-		pickle.dump(clf[1], pickle_out)
+		else:
+			pickle_out = open(os.path.join("SKLearnModels", name_of_file + "1"), "wb")
+			pickle.dump(clf[0], pickle_out)
+			pickle_out = open(os.path.join("SKLearnModels", name_of_file + "2"), "wb")
+			pickle.dump(clf[1], pickle_out)
 	else:
 		pickle_out = open(os.path.join("SKLearnModels", name_of_file), "wb")
 		pickle.dump(clf, pickle_out)
