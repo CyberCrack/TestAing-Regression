@@ -23,11 +23,11 @@ def LassoRegressor(X_train, X_test, y_train, y_test):
 def LassoRegressorGS(X_train, X_test, y_train, y_test):
 	clf = Lasso()
 	grid_values = {
-		'alpha': list(range(1, 5)) + [value * 0.01 for value in range(1, 5)],
+		'alpha': list(range(1, 3)) + [value * 0.01 for value in range(1, 3)],
 	}
 	grid_clf = GridSearchCV(clf, param_grid=grid_values, scoring=['neg_mean_squared_error', 'neg_mean_absolute_error', 'r2'],
 							refit='r2',
-							n_jobs=4, cv=5, verbose=100)
+							n_jobs=-1, cv=2, verbose=100)
 	grid_clf.fit(X_train, y_train)
 	clf = grid_clf.best_estimator_
 	clf.fit(X_train, y_train)

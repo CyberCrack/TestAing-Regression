@@ -23,11 +23,11 @@ def LarsRegressor(X_train, X_test, y_train, y_test):
 def LarsRegressorGS(X_train, X_test, y_train, y_test):
 	clf = Lars()
 	grid_values = {
-		'n_nonzero_coefs': list(range(100, 1001, 100)),
+		'n_nonzero_coefs': list(range(100, 500, 100)),
 	}
 	grid_clf = GridSearchCV(clf, param_grid=grid_values, scoring=['neg_mean_squared_error', 'neg_mean_absolute_error', 'r2'],
 							refit='r2',
-							n_jobs=4, cv=5, verbose=100)
+							n_jobs=-1, cv=2, verbose=100)
 	grid_clf.fit(X_train, y_train)
 	clf = grid_clf.best_estimator_
 	clf.fit(X_train, y_train)

@@ -35,22 +35,20 @@ def GradientBoostingGS(X_train, X_test, y_train, y_test):
 	clf1 = GradientBoostingRegressor()
 	clf2 = GradientBoostingRegressor()
 	grid_values = {
-		'loss': ['ls', 'lad', 'huber'], 'learning_rate': [value * 0.1 for value in range(1, 11)],
-		'n_estimators': list(range(50, 300, 50)),
-		'criterion': ["mse", "friedman_mse", "mae"],
-		'max_features': ["auto", "sqrt", "log2"],
+		'loss': ['ls', 'huber'], 'learning_rate': [value * 0.1 for value in range(1, 3)],
+		'criterion': ["mse",  "mae"],
 		'alpha': [0.25, 0.5, 0.75, 0.9],
 	}
 
 	grid_clf1 = GridSearchCV(clf1, param_grid=grid_values, scoring=['neg_mean_squared_error', 'neg_mean_absolute_error', 'r2'],
 							 refit='r2',
-							 n_jobs=4, cv=5, verbose=100)
+							 n_jobs=-1, cv=2, verbose=100)
 	grid_clf1.fit(X_train, y_train1)
 	clf1 = grid_clf1.best_estimator_
 	clf1.fit(X_train, y_train1)
 	grid_clf2 = GridSearchCV(clf2, param_grid=grid_values, scoring=['neg_mean_squared_error', 'neg_mean_absolute_error', 'r2'],
 							 refit='r2',
-							 n_jobs=4, cv=5, verbose=100)
+							 n_jobs=-1, cv=2, verbose=100)
 	grid_clf2.fit(X_train, y_train2)
 	clf2 = grid_clf1.best_estimator_
 	clf2.fit(X_train, y_train2)

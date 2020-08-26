@@ -35,21 +35,21 @@ def SGD_GS(X_train, X_test, y_train, y_test):
 	clf1 = SGDRegressor()
 	clf2 = SGDRegressor()
 	grid_values = {
-		'alpha': [value * 0.001 for value in range(1, 11)],
-		'loss': ['squared_loss', 'huber', 'epsilon_insensitive', 'squared_epsilon_insensitive'],
-		'penalty': ['l2', 'l1', 'elasticnet'],
-		'l1_ratio': [value * 0.1 for value in range(0, 11)]
+		'alpha': [value * 0.001 for value in range(1, 3)],
+		'loss': ['squared_loss', 'huber'],
+		'penalty': ['l2', 'l1'],
+		'l1_ratio': [value * 0.1 for value in range(0, 3)]
 	}
 
 	grid_clf1 = GridSearchCV(clf1, param_grid=grid_values, scoring=['neg_mean_squared_error', 'neg_mean_absolute_error', 'r2'],
 							 refit='r2',
-							 n_jobs=4, cv=5, verbose=100)
+							 n_jobs=-1, cv=2, verbose=100)
 	grid_clf1.fit(X_train, y_train1)
 	clf1 = grid_clf1.best_estimator_
 	clf1.fit(X_train, y_train1)
 	grid_clf2 = GridSearchCV(clf2, param_grid=grid_values, scoring=['neg_mean_squared_error', 'neg_mean_absolute_error', 'r2'],
 							 refit='r2',
-							 n_jobs=4, cv=5, verbose=100)
+							 n_jobs=-1, cv=2, verbose=100)
 	grid_clf2.fit(X_train, y_train2)
 	clf2 = grid_clf1.best_estimator_
 	clf2.fit(X_train, y_train2)

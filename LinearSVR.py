@@ -35,19 +35,19 @@ def LinearSVRRegressorGS(X_train, X_test, y_train, y_test):
 	clf1 = LinearSVR()
 	clf2 = LinearSVR()
 	grid_values = {
-		'epsilon': list(range(1, 5)) + [value * 0.01 for value in range(1, 5)], 'C': [value * 0.01 for value in range(1, 5)],
+		'epsilon': list(range(1, 3)) + [value * 0.01 for value in range(1, 3)], 'C': [value * 0.01 for value in range(1, 3)],
 		'loss': ['epsilon_insensitive', 'squared_epsilon_insensitive']
 	}
 
 	grid_clf1 = GridSearchCV(clf1, param_grid=grid_values, scoring=['neg_mean_squared_error', 'neg_mean_absolute_error', 'r2'],
 							 refit='r2',
-							 n_jobs=4, cv=5, verbose=100)
+							 n_jobs=-1, cv=2, verbose=100)
 	grid_clf1.fit(X_train, y_train1)
 	clf1 = grid_clf1.best_estimator_
 	clf1.fit(X_train, y_train1)
 	grid_clf2 = GridSearchCV(clf2, param_grid=grid_values, scoring=['neg_mean_squared_error', 'neg_mean_absolute_error', 'r2'],
 							 refit='r2',
-							 n_jobs=4, cv=5, verbose=100)
+							 n_jobs=-1, cv=2, verbose=100)
 	grid_clf2.fit(X_train, y_train2)
 	clf2 = grid_clf1.best_estimator_
 	clf2.fit(X_train, y_train2)

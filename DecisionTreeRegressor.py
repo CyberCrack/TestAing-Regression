@@ -23,13 +23,12 @@ def DecisionTree(X_train, X_test, y_train, y_test):
 def DecisionTreeGS(X_train, X_test, y_train, y_test):
 	clf = DecisionTreeRegressor()
 	grid_values = {
-		'criterion': ["mse", "friedman_mse", "mae"],
-		'max_depth': list(range(20, 31)),
-		'max_features': ["auto", "sqrt", "log2"]
+		'criterion': ["mse", "mae"],
+		'max_depth': list(range(20, 25))
 	}
 	grid_clf = GridSearchCV(clf, param_grid=grid_values, scoring=['neg_mean_squared_error', 'neg_mean_absolute_error', 'r2'],
 							refit='r2',
-							n_jobs=4, cv=5, verbose=100)
+							n_jobs=-1, cv=2, verbose=100)
 	grid_clf.fit(X_train, y_train)
 	clf = grid_clf.best_estimator_
 	clf.fit(X_train, y_train)

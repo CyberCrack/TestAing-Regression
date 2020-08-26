@@ -58,4 +58,3 @@ def GridSearch(makePolynomialFeatures):
 if __name__ == "__main__":
 	# Normal(True)
 	GridSearch(True)
-# Normal(False)

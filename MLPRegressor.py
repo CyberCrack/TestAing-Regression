@@ -24,14 +24,13 @@ def NeuralNetGS(X_train, X_test, y_train, y_test):
 	clf = MLPRegressor()
 	grid_values = {
 		'hidden_layer_sizes': [(8, 16, 32, 64, 128, 64, 32, 64, 16, 8), (8, 16, 32, 64, 32, 16, 8), (8, 16, 32, 16, 8)],
-		'activation': ['tanh', 'relu'],
-		'solver': ['lbfgs', 'sgd', 'adam'],
+		'solver': ['adam'],
 		'learning_rate': ['constant', 'invscaling']
 
 	}
 	grid_clf = GridSearchCV(clf, param_grid=grid_values, scoring=['neg_mean_squared_error', 'neg_mean_absolute_error', 'r2'],
 							refit='r2',
-							n_jobs=4, cv=5, verbose=100)
+							n_jobs=-1, cv=2, verbose=100)
 	grid_clf.fit(X_train, y_train)
 	clf = grid_clf.best_estimator_
 	clf.fit(X_train, y_train)

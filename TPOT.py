@@ -7,9 +7,9 @@ X_train, X_test, y_train, y_test = getPlantsPropulsionData(splitData=True, makeP
 y_train1 = y_train[:, 0]
 y_train2 = y_train[:, 1]
 
-tpotReg1 = TPOTRegressor(generations=50, population_size=50, max_time_mins=15, scoring='r2', verbosity=3, n_jobs=4)
+tpotReg1 = TPOTRegressor(generations=50, population_size=50, max_time_mins=5, scoring='r2', verbosity=3, n_jobs=4)
 
-tpotReg2 = TPOTRegressor(generations=50, population_size=50, max_time_mins=15, scoring='r2', verbosity=3, n_jobs=4)
+tpotReg2 = TPOTRegressor(generations=50, population_size=50, max_time_mins=5, scoring='r2', verbosity=3, n_jobs=4)
 
 tpotReg1.fit(X_train, y_train1)
 tpotReg2.fit(X_train, y_train2)
@@ -28,4 +28,5 @@ y_pred = np.hstack((y_pred1.reshape(-1, 1), y_pred2.reshape(-1, 1)))
 printMetrics(y_true=y_train, y_pred=y_pred)
 metrics = getMetrics(y_true=y_train, y_pred=y_pred)
 
-tpotReg1.export('tpot_pipeline.py')
+tpotReg1.export('tpot_pipeline1.py')
+tpotReg2.export('tpot_pipeline2.py')

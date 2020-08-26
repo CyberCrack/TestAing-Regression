@@ -33,22 +33,22 @@ def AdaBoost(X_train, X_test, y_train, y_test):
 def AdaBoostGS(X_train, X_test, y_train, y_test):
 	y_train1 = y_train[:, 0]
 	y_train2 = y_train[:, 1]
-	clf1 = AdaBoostRegressor(base_estimator=LinearSVR(), n_estimators=5)
-	clf2 = AdaBoostRegressor(base_estimator=LinearSVR(), n_estimators=5)
+	clf1 = AdaBoostRegressor(base_estimator=LinearSVR(), n_estimators=3)
+	clf2 = AdaBoostRegressor(base_estimator=LinearSVR(), n_estimators=3)
 	grid_values = {
-		'base_estimator__epsilon': [value * 0.1 for value in range(0, 5)], 'base_estimator__C': list(range(1, 5)),
-		'base_estimator__loss': ['epsilon_insensitive', 'squared_epsilon_insensitive'], 'loss': ['linear', 'square', 'exponential']
+		'base_estimator__epsilon': [value * 0.1 for value in range(0, 2)], 'base_estimator__C': list(range(1, 2)),
+		'base_estimator__loss': ['epsilon_insensitive', 'squared_epsilon_insensitive']
 	}
 
 	grid_clf1 = GridSearchCV(clf1, param_grid=grid_values, scoring=['neg_mean_squared_error', 'neg_mean_absolute_error', 'r2'],
 							 refit='r2',
-							 n_jobs=4, cv=5, verbose=100)
+							 n_jobs=-1, cv=2, verbose=100)
 	grid_clf1.fit(X_train, y_train1)
 	clf1 = grid_clf1.best_estimator_
 	clf1.fit(X_train, y_train1)
 	grid_clf2 = GridSearchCV(clf2, param_grid=grid_values, scoring=['neg_mean_squared_error', 'neg_mean_absolute_error', 'r2'],
 							 refit='r2',
-							 n_jobs=4, cv=5, verbose=100)
+							 n_jobs=-1, cv=2, verbose=100)
 	grid_clf2.fit(X_train, y_train2)
 	clf2 = grid_clf1.best_estimator_
 	clf2.fit(X_train, y_train2)
