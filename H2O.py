@@ -52,5 +52,5 @@ y_pred = np.hstack((y_preds1, y_preds2))
 metrics = getMetrics(y_true=y_train, y_pred=y_pred)
 printMetrics(y_true=y_train, y_pred=y_pred)
 
-# logSave(nameOfModel="H2O", clf=[aml1, aml2], metrics=metrics, val_metrics=val_metrics)
-# h2o.shutdown(prompt=True)
+logSave(nameOfModel="H2O", reg=[aml1, aml2], metrics=metrics, val_metrics=val_metrics)
+h2o.cluster().shutdown(prompt=False)

@@ -13,6 +13,7 @@ from Ridge import RidgeRegressor, RidgeRegressorGS
 from SGDRegressor import SGD, SGD_GS
 from SVR import SVRRegressor, SVRRegressorGS
 from Utility import getPlantsPropulsionData
+from XgBoost import XgBoostGS, XgBoost
 
 
 def Normal(makePolynomialFeatures):
@@ -33,6 +34,7 @@ def Normal(makePolynomialFeatures):
 		RidgeRegressor(X_train, X_test, y_train, y_test)
 		SGD(X_train, X_test, y_train, y_test)
 		SVRRegressor(X_train, X_test, y_train, y_test)
+		XgBoost(X_train, X_test, y_train, y_test)
 
 
 def GridSearch(makePolynomialFeatures):
@@ -53,7 +55,7 @@ def GridSearch(makePolynomialFeatures):
 		RidgeRegressorGS(X_train, X_test, y_train, y_test)
 		SGD_GS(X_train, X_test, y_train, y_test)
 		SVRRegressorGS(X_train, X_test, y_train, y_test)
-
+		XgBoostGS(X_train, X_test, y_train, y_test)
 
 if __name__ == "__main__":
 	# Normal(True)
